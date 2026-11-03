@@ -3,24 +3,28 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#10091d">
-<title>BRAVE TOWN | LAW SYSTEM</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050914">
+<meta name="description" content="BRAVE TOWN Official Administration System">
+<title>BRAVE TOWN | ELITE ADMIN SYSTEM</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&display=swap');
-
-:root {
-  --bg:#090711;
-  --panel:#171125;
-  --purple:#9333ea;
-  --violet:#6d28d9;
-  --pink:#ec4899;
-  --cyan:#22d3ee;
-  --gold:#f5c76b;
-  --text:#faf5ff;
-  --muted:#b9abc9;
-  --line:rgba(190,150,255,.2);
+:root{
+--bg:#050914;
+--panel:#0b1629;
+--panel2:#10213b;
+--blue:#2865b5;
+--blue2:#438eea;
+--light:#9acaff;
+--white:#f3f7ff;
+--muted:#91a5c1;
+--line:rgba(117,173,255,.17);
+--green:#58d6a0;
+--red:#ff7777;
+--radius:20px;
 }
 
 *{box-sizing:border-box}
@@ -28,948 +32,1685 @@
 html{scroll-behavior:smooth}
 
 body{
- margin:0;
- background:
- radial-gradient(ellipse at 80% 0%,#54208a55,transparent 40%),
- radial-gradient(ellipse at 0% 40%,#164e6355,transparent 35%),
- var(--bg);
- color:var(--text);
- font-family:'Alexandria',Tahoma,sans-serif;
- line-height:1.9;
+margin:0;
+background:var(--bg);
+color:var(--white);
+font-family:'Cairo',sans-serif;
+overflow-x:hidden;
 }
 
-button,input{font:inherit}
+button,input,select{font-family:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+::selection{background:#2865b5;color:white}
+
+/* SPACE BACKGROUND */
+
+#spaceVideo{
+position:fixed;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-3;
+pointer-events:none;
+background:#030713;
+}
+
+#spaceOverlay{
+position:fixed;
+inset:0;
+background:
+linear-gradient(rgba(3,8,19,.80),rgba(3,8,19,.89)),
+radial-gradient(ellipse at center,transparent,#020611);
+z-index:-2;
+pointer-events:none;
+}
+
+body:before{
+content:"";
+position:fixed;
+width:500px;
+height:500px;
+top:-250px;
+right:-150px;
+background:#1554a0;
+filter:blur(170px);
+opacity:.20;
+pointer-events:none;
+z-index:-1;
+}
+
+body:after{
+content:"";
+position:fixed;
+width:400px;
+height:400px;
+bottom:-200px;
+left:-150px;
+background:#174c91;
+filter:blur(150px);
+opacity:.15;
+pointer-events:none;
+z-index:-1;
+}
+
+#particles{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:1;
+opacity:.55;
+}
+
+.particle{
+position:absolute;
+width:3px;
+height:3px;
+border-radius:50%;
+background:var(--light);
+box-shadow:0 0 12px var(--blue);
+animation:float 9s infinite ease-in-out;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0);opacity:.2}
+50%{transform:translateY(-35px);opacity:.9}
+}
+
+/* LOGIN SCREEN */
+
+#loginScreen{
+position:fixed;
+inset:0;
+z-index:99999;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+background:
+radial-gradient(ellipse at top,#153d6b 0%,transparent 55%),
+linear-gradient(135deg,#02050d,#08152b,#02050d);
+}
+
+.login-card{
+width:100%;
+max-width:440px;
+padding:40px 26px;
+text-align:center;
+background:rgba(9,20,39,.95);
+border:1px solid rgba(116,177,255,.4);
+border-radius:25px;
+box-shadow:
+0 0 80px rgba(25,104,190,.25),
+inset 0 0 30px rgba(45,105,180,.06);
+backdrop-filter:blur(20px);
+animation:loginAppear .7s ease;
+}
+
+@keyframes loginAppear{
+from{opacity:0;transform:translateY(25px) scale(.96)}
+to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.login-emblem{
+width:80px;
+height:80px;
+margin:0 auto 20px;
+display:grid;
+place-items:center;
+font-size:40px;
+color:#b5d8ff;
+border:1px solid #438eea;
+border-radius:23px;
+background:linear-gradient(145deg,#193f70,#09172c);
+box-shadow:0 0 35px #16477b;
+}
+
+.login-label{
+color:#8fc4ff;
+font-size:12px;
+letter-spacing:5px;
+font-weight:900;
+}
+
+.login-card h1{
+font-size:27px;
+margin:12px 0;
+color:white;
+}
+
+.login-card p{
+font-size:12px;
+line-height:2;
+color:#91a5c1;
+}
+
+.login-card input{
+width:100%;
+padding:15px;
+margin:20px 0 12px;
+border-radius:12px;
+border:1px solid #294c76;
+outline:none;
+background:#061122;
+color:white;
+text-align:center;
+font-size:15px;
+}
+
+.login-card input:focus{
+border-color:#69aaff;
+box-shadow:0 0 15px rgba(67,142,234,.2);
+}
+
+.login-card button{
+width:100%;
+padding:14px;
+border:0;
+border-radius:12px;
+background:linear-gradient(120deg,#20589a,#438eea);
+color:white;
+font-weight:900;
+font-family:inherit;
+transition:.25s;
+}
+
+.login-card button:hover{
+filter:brightness(1.2);
+transform:translateY(-2px);
+}
+
+.login-card small{
+display:block;
+color:#66809f;
+font-size:9px;
+margin-top:25px;
+letter-spacing:2px;
+}
+
+#loginError{
+color:#ff7777;
+font-size:12px;
+margin-top:12px;
+min-height:20px;
+}
+
+/* TOPBAR */
 
 .topbar{
- position:sticky;
- top:0;
- z-index:20;
- background:#090711dd;
- backdrop-filter:blur(18px);
- border-bottom:1px solid var(--line);
-}
-
-.nav{
- max-width:1200px;
- margin:auto;
- padding:13px 22px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:15px;
+height:68px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 6%;
+background:rgba(5,9,20,.88);
+border-bottom:1px solid var(--line);
+backdrop-filter:blur(18px);
+position:sticky;
+top:0;
+z-index:100;
 }
 
 .brand{
- display:flex;
- align-items:center;
- gap:12px;
- font-weight:800;
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:900;
+font-size:15px;
+letter-spacing:1px;
 }
 
-.logo{
- width:45px;
- height:45px;
- border-radius:14px;
- display:grid;
- place-items:center;
- background:linear-gradient(135deg,#9333ea,#4f46e5,#ec4899);
- box-shadow:0 0 25px #9333ea66;
- font-size:25px;
+.brand-icon{
+width:38px;
+height:38px;
+display:grid;
+place-items:center;
+background:linear-gradient(145deg,#245da5,#0b1d38);
+border:1px solid #5598e9;
+border-radius:12px;
+color:white;
+font-size:19px;
+box-shadow:0 0 20px #174a88;
 }
 
-.brand small{
- display:block;
- color:#c4a5fd;
- font-size:10px;
- letter-spacing:2px;
+.status{
+display:flex;
+align-items:center;
+gap:8px;
+color:var(--muted);
+font-size:11px;
 }
 
-.navlinks{
- display:flex;
- gap:20px;
- color:var(--muted);
- font-size:12px;
+.dot{
+width:7px;
+height:7px;
+background:#53c998;
+border-radius:50%;
+box-shadow:0 0 10px #53c998;
 }
 
-.navlinks a:hover{color:white}
-
-.btn{
- border:1px solid var(--line);
- border-radius:13px;
- padding:11px 18px;
- background:#211532;
- color:white;
- cursor:pointer;
- font-size:12px;
- transition:.2s;
+.menu-btn{
+display:none;
+background:var(--panel2);
+color:white;
+border:1px solid var(--line);
+border-radius:10px;
+padding:8px 12px;
+font-size:18px;
 }
 
-.btn.primary{
- background:linear-gradient(110deg,#7c3aed,#a855f7,#db2777);
- border:0;
- box-shadow:0 8px 30px #9333ea44;
-}
-
-.btn:hover{
- transform:translateY(-2px);
- filter:brightness(1.15);
-}
+/* HERO */
 
 .hero{
- max-width:1200px;
- margin:50px auto 25px;
- padding:30px 22px;
- display:grid;
- grid-template-columns:1.2fr .8fr;
- gap:25px;
- align-items:center;
+min-height:570px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:90px 20px 75px;
+position:relative;
+overflow:hidden;
+z-index:2;
 }
 
-.eyebrow{
- color:#d8b4fe;
- font-size:12px;
- letter-spacing:3px;
- font-weight:700;
+.hero:before{
+content:"";
+position:absolute;
+width:500px;
+height:500px;
+border:1px solid rgba(106,169,255,.12);
+border-radius:50%;
+box-shadow:
+0 0 0 55px rgba(106,169,255,.025),
+0 0 0 110px rgba(106,169,255,.02);
 }
 
-h1{
- font-size:clamp(35px,6vw,68px);
- line-height:1.3;
- margin:13px 0;
- background:linear-gradient(100deg,#fff,#d8b4fe,#67e8f9);
- -webkit-background-clip:text;
- background-clip:text;
- color:transparent;
+.hero-content{
+position:relative;
+z-index:2;
+}
+
+.hero-label{
+display:inline-flex;
+gap:9px;
+align-items:center;
+padding:8px 17px;
+border:1px solid var(--line);
+border-radius:50px;
+color:var(--light);
+background:rgba(30,72,130,.2);
+font-size:11px;
+margin-bottom:25px;
+}
+
+.hero h1{
+font-size:clamp(35px,8vw,70px);
+font-weight:900;
+line-height:1.25;
+margin:0;
+letter-spacing:2px;
+background:linear-gradient(100deg,#fff,#8bc4ff,#3d80d3);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+}
+
+.hero h2{
+font-size:17px;
+letter-spacing:5px;
+color:var(--light);
+margin:12px 0;
 }
 
 .hero p{
- color:var(--muted);
- max-width:680px;
- font-size:14px;
+max-width:580px;
+margin:20px auto;
+color:var(--muted);
+line-height:2;
+font-size:13px;
 }
 
 .hero-actions{
- display:flex;
- flex-wrap:wrap;
- gap:10px;
- margin-top:23px;
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+margin-top:30px;
 }
 
-.hero-art{
- min-height:260px;
- border:1px solid var(--line);
- border-radius:28px;
- background:linear-gradient(145deg,#25143f,#11101d);
- display:grid;
- place-items:center;
- position:relative;
- overflow:hidden;
- box-shadow:0 18px 60px #0008;
+.btn{
+border:1px solid var(--line);
+padding:12px 22px;
+border-radius:12px;
+font-weight:800;
+font-size:12px;
+transition:.25s;
 }
 
-.hero-art:before{
- content:"";
- position:absolute;
- width:220px;
- height:220px;
- background:#a855f766;
- filter:blur(70px);
+.btn-primary{
+background:linear-gradient(120deg,#245ca7,#327fd9);
+color:white;
+box-shadow:0 8px 25px #123d75;
 }
 
-.emblem{
- position:relative;
- text-align:center;
+.btn-secondary{
+background:rgba(255,255,255,.035);
+color:var(--light);
 }
 
-.emblem .crown{
- font-size:75px;
- filter:drop-shadow(0 0 18px #c084fc);
+.btn:hover{
+transform:translateY(-3px);
+filter:brightness(1.2);
 }
 
-.emblem strong{
- display:block;
- font-size:23px;
- letter-spacing:3px;
-}
-
-.emblem span{
- font-size:10px;
- color:#d8b4fe;
- letter-spacing:4px;
-}
+/* STATS */
 
 .stats{
- max-width:1156px;
- margin:0 auto 28px;
- padding:0 22px;
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:12px;
+max-width:1050px;
+margin:-25px auto 50px;
+padding:0 16px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+position:relative;
+z-index:3;
 }
 
 .stat{
- background:linear-gradient(145deg,#1c1530,#100d19);
- border:1px solid var(--line);
- border-radius:17px;
- padding:16px;
+background:linear-gradient(145deg,#10213a,#091426);
+border:1px solid var(--line);
+padding:20px 12px;
+text-align:center;
+border-radius:17px;
+box-shadow:0 15px 45px rgba(0,0,0,.25);
 }
 
-.stat b{
- font-size:25px;
- display:block;
- color:#e9d5ff;
+.stat strong{
+display:block;
+font-size:25px;
+color:var(--light);
+font-weight:900;
 }
 
 .stat span{
- font-size:11px;
- color:var(--muted);
+font-size:11px;
+color:var(--muted);
 }
 
-.layout{
- max-width:1200px;
- margin:auto;
- padding:0 22px 65px;
- display:grid;
- grid-template-columns:270px 1fr;
- gap:20px;
- align-items:start;
+/* NAVIGATION */
+
+.nav-wrap{
+max-width:1120px;
+margin:0 auto 35px;
+padding:0 15px;
+position:relative;
+z-index:5;
 }
 
-.sidebar{
- position:sticky;
- top:82px;
- background:#151022eF;
- border:1px solid var(--line);
- border-radius:20px;
- padding:15px;
- max-height:calc(100vh - 100px);
- overflow:auto;
+.nav{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+justify-content:center;
+padding:12px;
+border:1px solid var(--line);
+border-radius:17px;
+background:rgba(10,21,39,.94);
+backdrop-filter:blur(12px);
 }
 
-.side-title{
- font-size:11px;
- color:#c4b5fd;
- font-weight:700;
- margin:3px 8px 12px;
+.nav button{
+padding:10px 15px;
+border:1px solid transparent;
+border-radius:10px;
+background:transparent;
+color:var(--muted);
+font-size:11px;
+font-weight:700;
+transition:.25s;
 }
 
-.cat-btn{
- width:100%;
- text-align:right;
- background:transparent;
- border:1px solid transparent;
- color:#c9bdd8;
- padding:10px;
- border-radius:12px;
- cursor:pointer;
- font-size:12px;
- margin:2px 0;
+.nav button:hover,
+.nav button.active{
+background:linear-gradient(120deg,#1c4d88,#173967);
+color:white;
+border-color:#3979c4;
 }
 
-.cat-btn:hover,.cat-btn.active{
- background:linear-gradient(100deg,#7c3aed44,#ec489922);
- border-color:#a855f755;
- color:white;
+/* MAIN */
+
+.container{
+max-width:1050px;
+padding:0 16px;
+margin:auto;
+position:relative;
+z-index:2;
 }
 
-.cat-btn .ico{
- display:inline-block;
- width:27px;
+.page{
+display:none;
+animation:enter .35s ease;
 }
 
-.content{min-width:0}
+.page.active{display:block}
 
-.toolbar{margin-bottom:15px}
-
-.search{
- width:100%;
- background:#151022;
- border:1px solid var(--line);
- border-radius:14px;
- padding:13px 16px;
- color:white;
- outline:none;
- font-size:12px;
-}
-
-.search:focus{
- border-color:#a855f7;
- box-shadow:0 0 0 3px #a855f722;
+@keyframes enter{
+from{opacity:0;transform:translateY(12px)}
+to{opacity:1;transform:translateY(0)}
 }
 
 .section-head{
- padding:23px;
- border:1px solid var(--line);
- border-radius:20px;
- background:linear-gradient(110deg,#281344,#171125,#10202b);
- margin-bottom:15px;
-}
-
-.section-head .tag{
- font-size:10px;
- color:#d8b4fe;
- letter-spacing:2px;
+margin-bottom:25px;
+border-right:3px solid var(--blue2);
+padding-right:15px;
 }
 
 .section-head h2{
- margin:4px 0;
- font-size:24px;
+font-size:25px;
+margin:0;
+font-weight:900;
+color:var(--light);
 }
 
 .section-head p{
- margin:0;
- color:var(--muted);
- font-size:12px;
+font-size:12px;
+color:var(--muted);
+margin:5px 0;
 }
 
-.rules{display:grid;gap:10px}
-
-.rule{
- border:1px solid var(--line);
- background:linear-gradient(145deg,#1b152b,#0f0d18);
- border-radius:16px;
- overflow:hidden;
+.card{
+background:linear-gradient(145deg,rgba(16,32,56,.96),rgba(8,17,32,.97));
+border:1px solid var(--line);
+border-radius:var(--radius);
+padding:22px;
+margin:15px 0;
+box-shadow:0 15px 45px rgba(0,0,0,.25);
+transition:.25s;
 }
 
-.rule summary{
- cursor:pointer;
- list-style:none;
- padding:15px 17px;
- display:flex;
- align-items:center;
- gap:12px;
+.card:hover{
+border-color:rgba(117,173,255,.32);
 }
 
-.rule summary::-webkit-details-marker{display:none}
-
-.rule summary:after{
- content:"＋";
- margin-right:auto;
- color:#c4b5fd;
- font-size:18px;
+.card h3{
+font-size:16px;
+color:var(--light);
+margin:0 0 12px;
 }
 
-.rule[open] summary:after{content:"−"}
-
-.rule-num{
- width:32px;
- height:32px;
- flex:0 0 32px;
- border-radius:10px;
- display:grid;
- place-items:center;
- background:linear-gradient(135deg,#7c3aed,#db2777);
- font-size:11px;
- font-weight:700;
+.card p,
+.card li{
+color:#c2cfe0;
+font-size:13px;
+line-height:2.1;
 }
 
-.rule-title{
- font-size:12px;
- font-weight:700;
+.card ul{
+padding-right:20px;
+margin:0;
 }
 
-.pill{
- font-size:9px;
- padding:3px 8px;
- border-radius:30px;
- background:#7c3aed33;
- color:#d8b4fe;
- margin-right:7px;
+.card li{margin:5px 0}
+.card li::marker{color:#66aaff}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+gap:14px;
 }
 
-.rule-body{
- padding:0 60px 17px 18px;
- color:#c9bfd7;
- font-size:12px;
+.feature{
+background:linear-gradient(145deg,#102541,#0a1425);
+border:1px solid var(--line);
+border-radius:17px;
+padding:20px;
+transition:.3s;
 }
 
-.rule-body ul{margin:0;padding-right:17px}
-
-.rule-body li{margin:6px 0}
-
-.empty{
- display:none;
- text-align:center;
- color:var(--muted);
- padding:35px;
- border:1px dashed var(--line);
- border-radius:15px;
+.feature:hover{
+transform:translateY(-5px);
+border-color:var(--blue2);
 }
 
-.updates{
- margin-top:20px;
- border:1px solid var(--line);
- border-radius:18px;
- padding:18px;
- background:#151022;
+.feature-icon{
+width:45px;
+height:45px;
+display:grid;
+place-items:center;
+border-radius:13px;
+background:#17365e;
+color:var(--light);
+font-size:21px;
+margin-bottom:14px;
 }
 
-.updates h3{margin:0 0 10px;font-size:15px}
-
-.updates p{
- margin:5px 0;
- color:var(--muted);
- font-size:11px;
+.feature h3{
+font-size:14px;
+color:white;
+margin:0 0 8px;
 }
 
-footer{
- text-align:center;
- border-top:1px solid var(--line);
- padding:28px 15px;
- color:#8e829d;
- font-size:10px;
+.feature p{
+font-size:11px;
+color:var(--muted);
+line-height:2;
+margin:0;
 }
 
-@media(max-width:850px){
- .hero{grid-template-columns:1fr;margin-top:20px}
- .hero-art{min-height:190px}
- .layout{grid-template-columns:1fr}
- .sidebar{position:static;max-height:none}
- .navlinks{display:none}
- .stats{grid-template-columns:repeat(2,1fr)}
- #categoryNav{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
- }
- .side-title{grid-column:1/-1}
+.label{
+display:inline-block;
+padding:5px 12px;
+background:rgba(46,112,190,.17);
+border:1px solid var(--line);
+border-radius:30px;
+font-size:10px;
+color:var(--light);
+margin-bottom:12px;
 }
 
-@media(max-width:480px){
- .hero{padding-top:20px}
- .stats{gap:8px}
- .stat{padding:12px}
- .stat b{font-size:21px}
- .section-head{padding:17px}
- .rule summary{padding:12px}
- .rule-body{padding:0 55px 14px 13px}
+/* RANKS */
+
+.rank-card{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:15px;
+background:linear-gradient(110deg,#112442,#0a1527);
+border:1px solid var(--line);
+border-radius:14px;
+padding:15px 17px;
+margin:9px 0;
+transition:.2s;
+}
+
+.rank-card:hover{
+border-color:#4c91db;
+transform:translateX(-3px);
+}
+
+.rank-name{
+font-size:13px;
+font-weight:800;
+}
+
+.rank-level{
+font-size:10px;
+color:var(--muted);
+margin-top:4px;
+}
+
+.points{
+color:var(--light);
+background:#183b65;
+border:1px solid #285b91;
+border-radius:9px;
+padding:7px 12px;
+font-size:12px;
+font-weight:900;
+white-space:nowrap;
+}
+
+.level-title{
+display:flex;
+align-items:center;
+gap:10px;
+margin:28px 0 12px;
+color:var(--light);
+font-size:17px;
+}
+
+.level-title:after{
+content:"";
+height:1px;
+background:var(--line);
+flex:1;
+}
+
+/* TABLES */
+
+.table-wrap{
+overflow-x:auto;
+border:1px solid var(--line);
+border-radius:13px;
+margin:12px 0;
+}
+
+table{
+border-collapse:collapse;
+width:100%;
+min-width:450px;
+}
+
+th{
+background:#16345a;
+color:#b8d9ff;
+font-size:12px;
+padding:14px;
+text-align:right;
+}
+
+td{
+padding:12px 14px;
+border-top:1px solid var(--line);
+font-size:12px;
+color:#d1dced;
+}
+
+tr:hover td{
+background:rgba(54,115,185,.08);
+}
+
+/* SEARCH */
+
+.search-box{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:15px;
+background:#0b182b;
+border:1px solid var(--line);
+border-radius:12px;
+padding:0 14px;
+}
+
+.search-box span{color:var(--light)}
+
+.search-box input{
+width:100%;
+background:transparent;
+border:0;
+outline:0;
+padding:14px 0;
+color:white;
+font-family:inherit;
+font-size:12px;
+}
+
+.search-box input::placeholder{color:#7388a5}
+
+/* CALCULATOR */
+
+.form-label{
+display:block;
+color:var(--muted);
+font-size:12px;
+margin:15px 0 6px;
+}
+
+.field{
+width:100%;
+padding:13px 14px;
+background:#081426;
+border:1px solid var(--line);
+border-radius:11px;
+color:white;
+outline:none;
+font-family:inherit;
+}
+
+.field:focus{border-color:var(--blue2)}
+
+.action-btn{
+width:100%;
+margin-top:15px;
+padding:13px;
+border:0;
+border-radius:11px;
+background:linear-gradient(120deg,#1d5598,#337fd7);
+color:white;
+font-weight:900;
+font-family:inherit;
+}
+
+.result{
+display:none;
+margin-top:15px;
+padding:17px;
+border:1px solid #3167a4;
+background:#102544;
+border-radius:12px;
+color:#b8d9ff;
+font-size:13px;
+line-height:2;
+}
+
+.progress{
+height:8px;
+background:#07101e;
+border-radius:20px;
+overflow:hidden;
+margin:12px 0;
+}
+
+.progress span{
+display:block;
+height:100%;
+width:0;
+background:linear-gradient(90deg,#2865b5,#94c8ff);
+transition:width .5s;
+}
+
+/* FAQ */
+
+.faq{
+background:#0d1b30;
+border:1px solid var(--line);
+border-radius:13px;
+margin:10px 0;
+overflow:hidden;
+}
+
+.faq button{
+width:100%;
+padding:16px;
+background:transparent;
+border:0;
+color:var(--white);
+font-family:inherit;
+font-size:12px;
+font-weight:800;
+text-align:right;
+display:flex;
+justify-content:space-between;
+}
+
+.faq-content{
+display:none;
+padding:0 16px 16px;
+font-size:12px;
+line-height:2;
+color:var(--muted);
+}
+
+.faq.open .faq-content{display:block}
+.faq button span{color:var(--light)}
+
+/* COMMANDS */
+
+.command{
+margin-top:12px;
+padding:11px;
+background:#061326;
+border:1px solid var(--line);
+border-radius:9px;
+color:#9bcaff;
+direction:ltr;
+text-align:left;
+font-size:11px;
+overflow-wrap:anywhere;
+}
+
+/* FOOTER */
+
+.footer{
+margin-top:80px;
+padding:45px 15px;
+border-top:1px solid var(--line);
+background:linear-gradient(180deg,rgba(8,15,30,.96),rgba(5,9,20,.98));
+text-align:center;
+position:relative;
+z-index:2;
+}
+
+.footer-logo{
+font-size:24px;
+font-weight:900;
+color:var(--light);
+letter-spacing:2px;
+}
+
+.footer p{
+font-size:11px;
+color:var(--muted);
+line-height:2;
+}
+
+.footer-line{
+width:55px;
+height:3px;
+background:var(--blue2);
+margin:18px auto;
+border-radius:20px;
+}
+
+.top-btn{
+position:fixed;
+bottom:22px;
+left:20px;
+width:43px;
+height:43px;
+border-radius:13px;
+background:#1c5799;
+border:1px solid #5295df;
+color:white;
+font-size:19px;
+display:none;
+z-index:50;
+}
+
+.top-btn.show{display:block}
+
+/* MOBILE */
+
+@media(max-width:700px){
+.topbar{padding:0 16px}
+.menu-btn{display:block}
+.status{font-size:10px}
+.hero{min-height:510px;padding:70px 15px}
+.hero h2{font-size:13px;letter-spacing:3px}
+.stats{
+grid-template-columns:repeat(2,1fr);
+margin-top:-20px;
+}
+.nav-wrap{padding:0 10px}
+.nav{
+display:none;
+flex-direction:column;
+}
+.nav.open{display:flex}
+.nav button{text-align:right}
+.card{padding:17px}
+.section-head h2{font-size:21px}
+.rank-card{padding:13px}
+}
+
+@media(min-width:701px){
+.nav{display:flex!important}
 }
 </style>
 </head>
 
 <body>
 
+<!-- VIDEO BACKGROUND -->
+<video id="spaceVideo" autoplay muted loop playsinline>
+<source src="space.mp4" type="video/mp4">
+</video>
+<div id="spaceOverlay"></div>
+<div id="particles"></div>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+<div class="login-card">
+<div class="login-emblem">♛</div>
+<div class="login-label">BRAVE TOWN</div>
+<h1>ADMIN ACCESS</h1>
+<p>يرجى إدخال كلمة المرور الإدارية للدخول إلى النظام</p>
+
+<input
+id="adminPassword"
+type="password"
+placeholder="كلمة المرور الإدارية"
+autocomplete="current-password"
+>
+
+<button onclick="enterAdmin()">دخول النظام</button>
+<div id="loginError"></div>
+<small>BRAVE TOWN • PRIVATE PORTAL</small>
+</div>
+</div>
+
+<!-- HEADER -->
 <header class="topbar">
- <div class="nav">
-
-  <a class="brand" href="#">
-   <span class="logo">♛</span>
-   <span>
-    BRAVE TOWN
-    <small>LAW SYSTEM</small>
-   </span>
-  </a>
-
-  <div class="navlinks">
-   <a href="#categories">الأقسام</a>
-   <a href="#updates">التحديثات</a>
-   <a href="#footer">حول النظام</a>
-  </div>
-
-  <a class="btn"
-  href="https://discord.gg/bt-1"
-  target="_blank"
-  rel="noopener">
-  ديسكورد السيرفر ↗
-  </a>
-
- </div>
+<div class="brand">
+<div class="brand-icon">♛</div>
+<span>BRAVE TOWN</span>
+</div>
+<div class="status">
+<span class="dot"></span>
+النظام الإداري الرسمي
+</div>
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
 </header>
 
+<!-- HERO -->
 <section class="hero">
+<div class="hero-content">
+<div class="hero-label">✦ OFFICIAL ADMINISTRATION PORTAL ✦</div>
+<h1>BRAVE TOWN</h1>
+<h2>ELITE ADMIN SYSTEM</h2>
+<p>
+مرحباً بك في النظام الإداري الرسمي لسيرفر BRAVE TOWN CFW
+مرجع متكامل للقوانين والترقيات والأنظمة والصلاحيات الإدارية
+</p>
+<div class="hero-actions">
+<button class="btn btn-primary" onclick="go('rules')">استعراض القوانين</button>
+<button class="btn btn-secondary" onclick="go('ranks')">استعراض الرتب</button>
+</div>
+</div>
+</section>
 
- <div>
-  <div class="eyebrow">THE OFFICIAL ROLEPLAY RULEBOOK</div>
+<!-- STATISTICS -->
+<div class="stats">
+<div class="stat"><strong>14</strong><span>قوانين الإدارة</span></div>
+<div class="stat"><strong>3</strong><span>مستويات إدارية</span></div>
+<div class="stat"><strong>31</strong><span>مخالفة</span></div>
+<div class="stat"><strong>05</strong><span>طرق اكتساب نقاط</span></div>
+</div>
 
-  <h1>قوانين BRAVE TOWN</h1>
+<!-- NAVIGATION -->
+<div class="nav-wrap">
+<nav class="nav" id="nav">
+<button class="active" data-page="home" onclick="go('home')">الرئيسية</button>
+<button data-page="rules" onclick="go('rules')">القوانين</button>
+<button data-page="ranks" onclick="go('ranks')">الرتب والترقيات</button>
+<button data-page="points" onclick="go('points')">النقاط</button>
+<button data-page="timeout" onclick="go('timeout')">التايم أوت</button>
+<button data-page="commands" onclick="go('commands')">الأوامر</button>
+<button data-page="faq" onclick="go('faq')">الأسئلة الشائعة</button>
+<button data-page="about" onclick="go('about')">عن النظام</button>
+</nav>
+</div>
 
-  <p>
-   المرجع الرسمي لتنظيم تجربة الرول بلاي داخل بريف تاون
-   اقرأ القوانين وافهم الأنظمة وكن جزءاً من مجتمع
-   يحترم الجميع ويصنع تجربة لعب أفضل
-  </p>
+<main class="container">
 
-  <div class="hero-actions">
-   <button class="btn primary"
-   onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">
-   استعرض القوانين
-   </button>
+<!-- HOME -->
+<section class="page active" id="home">
 
-   <button class="btn"
-   onclick="document.getElementById('searchBox').focus()">
-   ابحث عن قانون ⌕
-   </button>
-  </div>
- </div>
+<div class="section-head">
+<h2>مرحباً بك في النظام الإداري</h2>
+<p>كل ما تحتاج معرفته عن الإدارة في مكان واحد</p>
+</div>
 
- <div class="hero-art">
-  <div class="emblem">
-   <div class="crown">♛</div>
-   <strong>BRAVE TOWN</strong>
-   <span>LAW • ORDER • ROLEPLAY</span>
-  </div>
- </div>
+<div class="grid">
+
+<div class="feature">
+<div class="feature-icon">⚖</div>
+<h3>القوانين الإدارية</h3>
+<p>الاطلاع على جميع القوانين والالتزامات الإدارية.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">♛</div>
+<h3>السلم الإداري</h3>
+<p>معرفة المستويات الإدارية والرتب التابعة لها.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">🏆</div>
+<h3>نظام الترقيات</h3>
+<p>معرفة نقاط الترقية وآلية الاستحقاق.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">⏱</div>
+<h3>جدول العقوبات</h3>
+<p>الاطلاع على المخالفات ومدد التايم أوت.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">🛡</div>
+<h3>الأوامر الإدارية</h3>
+<p>شرح الأوامر وضوابط استخدام الصلاحيات.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">📋</div>
+<h3>المسؤوليات</h3>
+<p>توضيح المهام والواجبات حسب المستوى الإداري.</p>
+</div>
+
+</div>
+
+<div class="card">
+<span class="label">ADMINISTRATION VISION</span>
+<h3>رؤيتنا الإدارية</h3>
+<p>
+بناء بيئة إدارية منظمة تقوم على الاحترام والعدل والانضباط
+وتطوير الكفاءات وتوزيع المسؤوليات بصورة واضحة
+والمحافظة على جودة العمل الإداري داخل BRAVE TOWN
+</p>
+</div>
+
+<div class="card">
+<h3>مبادئ العمل الإداري</h3>
+<div class="grid">
+<div><span class="label">الاحترام</span><p>التعامل الراقي مع الجميع.</p></div>
+<div><span class="label">العدالة</span><p>تطبيق الأنظمة دون تحيز.</p></div>
+<div><span class="label">المسؤولية</span><p>تحمل نتائج القرارات الإدارية.</p></div>
+<div><span class="label">الالتزام</span><p>تنفيذ التعليمات والتعاميم.</p></div>
+</div>
+</div>
 
 </section>
 
-<section class="stats">
- <div class="stat">
-  <b id="categoryCount">7</b>
-  <span>أقسام رئيسية</span>
- </div>
+<!-- RULES -->
+<section class="page" id="rules">
 
- <div class="stat">
-  <b id="ruleCount">0</b>
-  <span>قانون وتعليمات</span>
- </div>
+<div class="section-head">
+<h2>قوانين الإدارة</h2>
+<p>القوانين الإدارية الرسمية لسيرفر BRAVE TOWN CFW</p>
+</div>
 
- <div class="stat">
-  <b>24/7</b>
-  <span>متاح للجميع</span>
- </div>
+<div class="card">
+<span class="label">ADMIN RULES</span>
+<h3>الالتزامات الإدارية</h3>
+<ul>
+<li>عدم الاستهزاء بالأعضاء أو الإدارة بأي شكل من الأشكال</li>
+<li>احترام الجميع وعدم التكبر على الأعضاء أو الإداريين</li>
+<li>وضع حالة أونلاين في حسابك حتى نعرف أنك متواجد</li>
+<li>وضع شعار السيرفر ورابطه في البايو</li>
+<li>يمنع التحدث عن المواضيع الإدارية في الأماكن العامة ويجب استخدام المكان المخصص للمواضيع الإدارية</li>
+<li>عدم طلب الرتب الإدارية</li>
+<li>يجب أن يكون أسلوبك جميلاً ومحترماً مع الأعضاء والإدارة</li>
+<li>عدم التدخل في تكت إداري آخر، والشخص الذي استلم التكت هو المسؤول عن التعامل معه</li>
+<li>عدم التحدث في التكت إلا إذا استلمته أو سمح لك الإداري المسؤول بالتحدث</li>
+<li>يمنع انتحال الإدارة أو مسؤولين السيرفر بأي شكل من الأشكال</li>
+<li>الشراكات والإعلانات: في حال وجود استفسار يجب التواصل مع المسؤول المختص وعدم إعطاء معلومات غير مؤكدة</li>
+<li>عدم إعطاء رتبة لأي شخص إلا بدليل واضح يثبت أحقيته بها</li>
+<li>التفاعل في الشات العام مهم ومطلوب من الإداريين</li>
+<li>يجب متابعة التعاميم والقرارات الإدارية باستمرار</li>
+</ul>
+</div>
 
- <div class="stat">
-  <b>v1.0</b>
-  <span>إصدار النظام</span>
- </div>
+<div class="card">
+<h3>المسؤولية والمحاسبة</h3>
+<p>
+عدم معرفة القوانين أو التعاميم لا يعفي الإداري من المسؤولية
+ويحق للإدارة المختصة اتخاذ الإجراء المناسب عند المخالفة
+</p>
+</div>
+
+<div class="card">
+<h3>المعيار الإداري</h3>
+<p>
+جميع الإداريين ملزمون بالمحافظة على سمعة السيرفر
+واحترام الصلاحيات وعدم استغلال المنصب لتحقيق مصالح شخصية
+</p>
+</div>
+
 </section>
 
-<main class="layout" id="categories">
+<!-- RANKS -->
+<section class="page" id="ranks">
 
- <aside class="sidebar">
-  <div class="side-title">قائمة الأقسام الرئيسية</div>
-  <nav id="categoryNav"></nav>
- </aside>
+<div class="section-head">
+<h2>السلم الإداري والترقيات</h2>
+<p>الرتب الرسمية ومتطلبات النقاط لكل مستوى</p>
+</div>
 
- <section class="content">
+<div class="card">
+<span class="label">LEVEL 01</span>
+<div class="level-title">الإدارة الصغرى</div>
+<p>تبدأ أول رتبة من 20 نقطة، وتزيد 15 نقطة بين كل رتبة.</p>
+<div id="smallRanks"></div>
 
-  <div class="toolbar">
-   <input
-    id="searchBox"
-    class="search"
-    type="search"
-    placeholder="ابحث باسم القانون أو كلمة من الشرح..."
-    autocomplete="off">
-  </div>
+<h3>المهام الأساسية</h3>
+<ul>
+<li>مساعدة الأعضاء والإجابة عن استفساراتهم</li>
+<li>متابعة المخالفات والتعامل معها حسب الصلاحيات</li>
+<li>استقبال التكتات والتعامل معها حسب الاختصاص</li>
+<li>رفع الحالات التي تحتاج إلى صلاحيات أعلى</li>
+<li>متابعة التعليمات والتعاميم</li>
+</ul>
+</div>
 
-  <div class="section-head">
-   <div class="tag">BRAVE TOWN / RULES</div>
-   <h2 id="sectionTitle">القوانين العامة</h2>
-   <p id="sectionDesc"></p>
-  </div>
+<div class="card">
+<span class="label">LEVEL 02</span>
+<div class="level-title">الإدارة الوسطى</div>
+<p>تبدأ أول رتبة من صفر نقطة، وتزيد 25 نقطة بين كل رتبة.</p>
+<div id="middleRanks"></div>
 
-  <div class="rules" id="rulesList"></div>
+<h3>المهام الأساسية</h3>
+<ul>
+<li>الإشراف على الإدارة الصغرى ومتابعة أدائها</li>
+<li>مراجعة الشكاوى والمشاكل الإدارية</li>
+<li>متابعة المخالفات والتأكد من الأدلة</li>
+<li>مراجعة أداء الإداريين وتقديم التقييمات</li>
+<li>رفع التقارير والاقتراحات للإدارة العليا</li>
+</ul>
+</div>
 
-  <div class="empty" id="emptyState">
-   لا توجد نتائج مطابقة لبحثك
-  </div>
+<div class="card">
+<span class="label">LEVEL 03</span>
+<div class="level-title">الإدارة العليا</div>
+<p>تبدأ أول رتبة من صفر نقطة، وتزيد 35 نقطة بين كل رتبة.</p>
+<div id="seniorRanks"></div>
 
-  <div class="updates" id="updates">
-   <h3>✦ سجل التحديثات</h3>
-   <p>الإصدار الأول من نظام قوانين BRAVE TOWN.</p>
-   <p>تتم إضافة أي تعديلات رسمية هنا بعد اعتمادها من إدارة السيرفر.</p>
-  </div>
+<h3>المهام الأساسية</h3>
+<ul>
+<li>الإشراف العام على المستويات الإدارية</li>
+<li>اتخاذ القرارات الإدارية الكبرى</li>
+<li>اعتماد الترقيات والقرارات المهمة</li>
+<li>مراجعة أداء الإدارة الوسطى والصغرى</li>
+<li>المحافظة على سرية المعلومات الإدارية</li>
+<li>حل النزاعات الإدارية واتخاذ القرارات المناسبة</li>
+</ul>
+</div>
 
- </section>
+<div class="card">
+<h3>آلية اعتماد الترقية</h3>
+<p>
+يتم تقييم الإداري حسب نشاطه وإنجازاته والتزامه
+ويشترط جمع النقاط المطلوبة وإثبات الكفاءة
+ثم الحصول على موافقة المسؤول المختص
+</p>
+</div>
+
+</section>
+
+<!-- POINTS -->
+<section class="page" id="points">
+
+<div class="section-head">
+<h2>نظام النقاط</h2>
+<p>نظام اكتساب النقاط الرسمي للترقيات الإدارية</p>
+</div>
+
+<div class="card">
+<span class="label">OFFICIAL POINT SYSTEM</span>
+<h3>جدول اكتساب النقاط</h3>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>العمل الإداري</th>
+<th>النقاط</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>استلام تذكرة</td><td><span class="points">1</span></td></tr>
+<tr><td>التفاعل في أي روم</td><td><span class="points">2</span></td></tr>
+<tr><td>إعطاء عضو تايم</td><td><span class="points">1</span></td></tr>
+<tr><td>إنشاء فعالية</td><td><span class="points">1.5</span></td></tr>
+<tr><td>مساعدة إداري</td><td><span class="points">1</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<p>هذه هي طرق اكتساب النقاط المعتمدة في النظام.</p>
+</div>
+
+<div class="card">
+<h3>حاسبة نقاط الترقية</h3>
+<p>اختر مستواك الإداري والرتبة المستهدفة لمعرفة النقاط المتبقية.</p>
+
+<label class="form-label">المستوى الإداري</label>
+<select class="field" id="level" onchange="updateRanks()">
+<option value="small">الإدارة الصغرى</option>
+<option value="middle">الإدارة الوسطى</option>
+<option value="senior">الإدارة العليا</option>
+</select>
+
+<label class="form-label">الرتبة المستهدفة</label>
+<select class="field" id="target"></select>
+
+<label class="form-label">نقاطك الحالية</label>
+<input class="field" type="number" min="0" step="0.5" id="currentPoints" placeholder="أدخل نقاطك الحالية">
+
+<button class="action-btn" onclick="calculate()">احسب نقاط الترقية</button>
+
+<div class="result" id="calcResult">
+<div id="calcText"></div>
+<div class="progress"><span id="progressBar"></span></div>
+</div>
+</div>
+
+<div class="card">
+<h3>شروط اعتماد الترقية</h3>
+<ul>
+<li>جمع النقاط المطلوبة للرتبة التالية</li>
+<li>الالتزام بالقوانين الإدارية</li>
+<li>النشاط والاستمرار في أداء المهام</li>
+<li>عدم وجود مخالفات إدارية مؤثرة</li>
+<li>إثبات القدرة على تحمل مسؤوليات الرتبة الجديدة</li>
+<li>موافقة المسؤول المختص على الترقية</li>
+</ul>
+<p>النقاط لا تضمن الترقية تلقائياً، ويجب اعتمادها من المسؤول المختص.</p>
+</div>
+
+</section>
+
+<!-- TIMEOUT -->
+<section class="page" id="timeout">
+
+<div class="section-head">
+<h2>نظام التايم أوت</h2>
+<p>المرجع الرسمي للمخالفات ومدد العقوبات</p>
+</div>
+
+<div class="card">
+<div class="label">PUNISHMENT DIRECTORY</div>
+
+<div class="search-box">
+<span>⌕</span>
+<input id="timeoutSearch" type="search" placeholder="ابحث عن اسم المخالفة..." oninput="filterTimeout()">
+</div>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>المخالفة</th>
+<th>المدة المعتمدة</th>
+</tr>
+</thead>
+<tbody id="timeoutRows"></tbody>
+</table>
+</div>
+
+<p id="emptySearch" style="display:none;text-align:center">لا توجد نتائج مطابقة</p>
+</div>
+
+<div class="card">
+<h3>ضوابط تطبيق العقوبات</h3>
+<ul>
+<li>التأكد من المخالفة قبل تطبيق العقوبة</li>
+<li>توفير دليل واضح عند الحاجة</li>
+<li>يمنع إعطاء العقوبات بسبب الخلافات الشخصية</li>
+<li>يمنع زيادة أو تخفيض العقوبة دون سبب واضح</li>
+<li>يجوز تصعيد العقوبة عند تكرار المخالفة</li>
+<li>رفع المخالفات الخطيرة للإدارة الوسطى والعليا</li>
+<li>توثيق العقوبات الإدارية عند الحاجة</li>
+</ul>
+</div>
+
+</section>
+
+<!-- COMMANDS -->
+<section class="page" id="commands">
+
+<div class="section-head">
+<h2>أوامر الإدارة</h2>
+<p>دليل الأوامر والصلاحيات الإدارية</p>
+</div>
+
+<div class="grid">
+
+<div class="feature">
+<div class="feature-icon">⏱</div>
+<h3>أمر التايم</h3>
+<p>يستخدم لإعطاء العضو تايم أوت حسب جدول المخالفات.</p>
+<div class="command">/تايم @العضو المدة السبب</div>
+</div>
+
+<div class="feature">
+<div class="feature-icon">✎</div>
+<h3>أمر اللقب</h3>
+<p>يستخدم لتغيير لقب العضو داخل السيرفر.</p>
+<div class="command">/لقب @العضو اللقب الجديد</div>
+</div>
+
+<div class="feature">
+<div class="feature-icon">⚒</div>
+<h3>أمر لف</h3>
+<p>يستخدم لحظر العضو من السيرفر وفق الصلاحيات المعتمدة.</p>
+<div class="command">/لف @العضو السبب</div>
+</div>
+
+<div class="feature">
+<div class="feature-icon">♜</div>
+<h3>أمر رول</h3>
+<p>يستخدم لإعطاء العضو رتبة محددة حسب الصلاحيات المسموحة.</p>
+<div class="command">/رول @العضو @الرتبة</div>
+</div>
+
+</div>
+
+<div class="card">
+<h3>ضوابط استخدام الأوامر</h3>
+<ul>
+<li>يمنع استخدام الأوامر لأغراض شخصية</li>
+<li>يجب كتابة سبب واضح للعقوبة</li>
+<li>يمنع إعطاء صلاحيات إدارية دون موافقة</li>
+<li>يجب التأكد من استحقاق العضو للرتبة قبل إعطائها</li>
+<li>يمنع استغلال الأوامر والصلاحيات</li>
+<li>تتم مراجعة إساءة استخدام الأوامر من الإدارة الأعلى</li>
+</ul>
+</div>
+
+</section>
+
+<!-- FAQ -->
+<section class="page" id="faq">
+
+<div class="section-head">
+<h2>الأسئلة الشائعة</h2>
+<p>إجابات مختصرة حول الأنظمة الإدارية</p>
+</div>
+
+<div class="faq">
+<button onclick="faq(this)">كيف تتم الترقية الإدارية؟ <span>＋</span></button>
+<div class="faq-content">تتم الترقية بناءً على النقاط والنشاط والاستحقاق وموافقة المسؤول المختص.</div>
+</div>
+
+<div class="faq">
+<button onclick="faq(this)">هل النقاط تضمن الترقية؟ <span>＋</span></button>
+<div class="faq-content">لا، النقاط شرط من شروط الترقية وليست ضماناً تلقائياً للحصول عليها.</div>
+</div>
+
+<div class="faq">
+<button onclick="faq(this)">هل يمكن خصم النقاط؟ <span>＋</span></button>
+<div class="faq-content">يتم تقييم المخالفات وفق القوانين الإدارية والقرارات المعتمدة.</div>
+</div>
+
+<div class="faq">
+<button onclick="faq(this)">من يعتمد الترقيات؟ <span>＋</span></button>
+<div class="faq-content">المسؤول المختص وفق التسلسل الإداري والصلاحيات المعتمدة.</div>
+</div>
+
+<div class="faq">
+<button onclick="faq(this)">ماذا أفعل عند وجود مشكلة إدارية؟ <span>＋</span></button>
+<div class="faq-content">يتم التواصل مع الجهة الإدارية المختصة وتقديم التفاصيل والأدلة المتوفرة.</div>
+</div>
+
+<div class="faq">
+<button onclick="faq(this)">هل يحق للإداري استغلال صلاحياته؟ <span>＋</span></button>
+<div class="faq-content">لا، جميع الصلاحيات مخصصة للعمل الإداري ويمنع استخدامها لتحقيق مصالح شخصية.</div>
+</div>
+
+</section>
+
+<!-- ABOUT -->
+<section class="page" id="about">
+
+<div class="section-head">
+<h2>عن النظام</h2>
+<p>BRAVE TOWN CFW Administration Portal</p>
+</div>
+
+<div class="card">
+<span class="label">ABOUT THE SYSTEM</span>
+<h3>النظام الإداري الرسمي</h3>
+<p>
+تم إنشاء هذا الموقع ليكون مرجعاً موحداً لجميع الأنظمة الإدارية
+ويهدف إلى تنظيم العمل وتوضيح المسؤوليات والارتقاء بمستوى الإدارة
+وتسهيل الوصول إلى القوانين والأنظمة المعتمدة
+</p>
+</div>
+
+<div class="grid">
+
+<div class="feature">
+<div class="feature-icon">◈</div>
+<h3>الهوية</h3>
+<p>تصميم رسمي بهوية BRAVE TOWN وألوان الأسود والأزرق.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">⌘</div>
+<h3>التنظيم</h3>
+<p>جمع الأنظمة الإدارية في مرجع واحد واضح.</p>
+</div>
+
+<div class="feature">
+<div class="feature-icon">◇</div>
+<h3>الشفافية</h3>
+<p>توضيح شروط الترقيات والعقوبات لجميع المعنيين.</p>
+</div>
+
+</div>
+
+<div class="card">
+<h3>حقوق الملكية</h3>
+<p>جميع الحقوق محفوظة لسيرفر BRAVE TOWN CFW.</p>
+</div>
+
+</section>
+
 </main>
 
-<footer id="footer">
- © BRAVE TOWN — LAW SYSTEM
- <br>
- جميع الحقوق محفوظة لإدارة السيرفر
- <br>
- هذا الموقع مرجع للقوانين وتُعتمد التعديلات الرسمية من إدارة BRAVE TOWN فقط
+<!-- FOOTER -->
+<footer class="footer">
+<div class="footer-logo">BRAVE TOWN</div>
+<div class="footer-line"></div>
+<p>ELITE ADMINISTRATION SYSTEM</p>
+<p>النظام الإداري الرسمي لسيرفر BRAVE TOWN CFW</p>
+<p>جميع الحقوق محفوظة © BRAVE TOWN</p>
 </footer>
+
+<button class="top-btn" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
 
-const categories = [
+/* PASSWORD */
 
-{
-id:"general",
-icon:"📜",
-name:"القوانين العامة",
-desc:"الأساس الذي يلتزم به جميع أعضاء السيرفر.",
-rules:[
+const ADMIN_PASSWORD = "1234567890";
 
-["الاحترام المتبادل",[
-"يجب احترام جميع اللاعبين والإدارة وعدم استخدام الألفاظ المسيئة أو الاستفزازية.",
-"يمنع التنمر أو التشهير أو إثارة المشاكل بين الأعضاء.",
-"يمنع انتحال شخصية لاعب آخر أو أحد أفراد الإدارة."
-]],
+function enterAdmin(){
+const input = document.getElementById("adminPassword");
+const error = document.getElementById("loginError");
 
-["الالتزام بتعليمات الإدارة",[
-"يجب الالتزام بالتوجيهات والقرارات الصادرة من الإدارة ضمن صلاحياتها.",
-"يمنع إزعاج الإدارة أو تكرار المنشن دون سبب واضح.",
-"يمكن الاعتراض على القرار عبر القنوات المخصصة وبأسلوب محترم."
-]],
-
-["الحسابات والغش",[
-"يمنع استخدام الهاكات أو البرامج أو الثغرات التي تمنح أفضلية غير عادلة.",
-"يمنع مشاركة الحساب بهدف مخالفة الأنظمة أو تمكين شخص آخر من الغش.",
-"يجب الإبلاغ عن الثغرات وعدم استغلالها."
-]],
-
-["العدالة داخل السيرفر",[
-"يمنع استغلال الأخطاء التقنية أو الأنظمة لتحقيق مكاسب غير مستحقة.",
-"يمنع الاتفاق على تخريب السيناريوهات أو تعطيل تجربة الآخرين.",
-"تطبق العقوبات بحسب نوع المخالفة وتكرارها وما تقرره الإدارة."
-]]
-
-]
-},
-
-{
-id:"rp",
-icon:"🎭",
-name:"قوانين الرول بلاي",
-desc:"جميع أنظمة التمثيل الواقعي مجتمعة في قسم واحد.",
-rules:[
-
-["مفهوم الرول بلاي",[
-"يجب تمثيل الشخصية والتصرف بما يناسب الموقف والبيئة داخل اللعبة.",
-"يمنع الخروج عن سياق الشخصية أو تحويل المواقف الجدية إلى مزاح يفسد السيناريو.",
-"يجب إعطاء الآخرين فرصة للتفاعل وعدم فرض نتيجة المشهد عليهم."
-]],
-
-["الحياة والخوف على الشخصية",[
-"يجب التعامل مع حياة الشخصية بجدية عند التعرض لخطر واضح.",
-"يمنع تجاهل التهديدات الجدية أو التصرف وكأن الشخصية لا تتأثر بالخطر.",
-"يجب تمثيل الخوف والإصابات والنتائج بما يتناسب مع أحداث السيناريو."
-]],
-
-["الموت والإصابات",[
-"يجب الالتزام بنظام الموت والإصابات المعتمد داخل الماب.",
-"يمنع العودة إلى موقع المواجهة أو استكمال نفس الاشتباك بطريقة تلغي نتيجة الإصابة أو الموت.",
-"يمنع تذكر أو استخدام معلومات لا تستطيع الشخصية معرفتها بعد فقدان الوعي وفق نظام السيرفر.",
-"يجب احترام دور المسعفين وإجراءات العلاج والإنعاش داخل السيناريو."
-]],
-
-["RDM — القتل العشوائي",[
-"يمنع قتل لاعب دون سبب واضح ومبرر داخل الرول بلاي.",
-"يجب وجود موقف أو تصعيد أو سيناريو يبرر استخدام القوة وفق قوانين السيرفر.",
-"الخلافات الشخصية خارج اللعبة لا تبرر الاعتداء داخلها."
-]],
-
-["VDM — استخدام المركبة كسلاح",[
-"يمنع دهس اللاعبين أو استخدام المركبة للاعتداء عليهم دون مبرر سيناريوي.",
-"يمنع صدم المركبات بشكل متعمد لإفساد اللعب أو إجبار الآخرين على التوقف.",
-"يجب قيادة المركبة بطريقة تتناسب مع طبيعة الطريق والموقف."
-]],
-
-["NVL — عدم تقدير الحياة",[
-"يمنع تجاهل الخطر الواضح الذي يهدد حياة الشخصية.",
-"يجب التفاعل مع التهديدات والمواقف الخطرة بصورة واقعية.",
-"يمنع القيام بتصرفات متهورة لا يمكن أن تقدم عليها شخصية تحافظ على حياتها."
-]],
-
-["Power Gaming — مخالفة الواقعية",[
-"يمنع تنفيذ أفعال غير واقعية أو فرض نتائج على لاعب آخر دون منحه فرصة للرد.",
-"يجب استخدام أوامر التمثيل مثل /me و /do بطريقة واضحة ومنطقية عند الحاجة.",
-"يمنع استغلال خصائص اللعبة لتنفيذ أفعال لا يمكن حدوثها ضمن سياق الرول بلاي."
-]],
-
-["Meta Gaming — استخدام المعلومات الخارجية",[
-"يمنع استخدام معلومات تم الحصول عليها خارج اللعبة لتحقيق أفضلية داخل السيناريو.",
-"يمنع نقل معلومات المواقع أو الأحداث من المحادثات الخارجية إلى الشخصية داخل اللعبة.",
-"يجب أن تحصل الشخصية على المعلومات من خلال أحداث الرول بلاي المسموح بها."
-]],
-
-["السيناريوهات والتصعيد",[
-"يجب إعطاء المواقف فرصة للتدرج قبل الانتقال إلى التصعيد أو استخدام القوة.",
-"يمنع بدء سيناريو عدائي دون سبب أو سياق مفهوم.",
-"يمنع قطع السيناريو أو الانسحاب منه بقصد تجنب نتائجه.",
-"يجب احترام نهاية السيناريو والنتائج المترتبة عليه."
-]],
-
-["المداهمات والاحتلال",[
-"يجب وجود مبرر وسيناريو واضح قبل تنفيذ المداهمة أو احتلال موقع وفق أنظمة السيرفر.",
-"يمنع تنفيذ المداهمات أو الاحتلال بصورة عشوائية أو دون استيفاء الشروط المعتمدة.",
-"يجب احترام حدود السيناريو والأطراف المشاركة فيه."
-]],
-
-["الخطف والرهائن",[
-"يجب أن يكون للخطف أو احتجاز الرهائن سبب ضمن سيناريو مفهوم.",
-"يمنع اتخاذ الأصدقاء أو المعارف رهائن بصورة صورية للحصول على أفضلية.",
-"يجب الحفاظ على جدية التفاوض وعدم استخدام الرهينة كوسيلة لإفساد المشهد."
-]]
-
-]
-},
-
-{
-id:"police",
-icon:"🚔",
-name:"قوانين الشرطة والعسكريين",
-desc:"تنظيم العمل الأمني والتعامل مع المواطنين والمواقف الميدانية.",
-rules:[
-
-["الرتب والزي الرسمي",[
-"يلتزم العسكري بالزي والمركبة والمعدات المناسبة لرتبته ومهمته.",
-"يمنع انتحال رتبة أو صلاحية ليست ممنوحة للشخصية.",
-"يجب احترام التسلسل الإداري والأوامر النظامية."
-]],
-
-["التدرج في استخدام القوة",[
-"يجب اختيار الإجراء المناسب للموقف وعدم استخدام قوة غير مبررة.",
-"يكون استخدام القوة متناسباً مع مستوى التهديد داخل السيناريو.",
-"يجب إعطاء التعليمات والتحذيرات عندما يسمح الموقف بذلك."
-]],
-
-["التوقيف والقبض",[
-"يجب وجود سبب واضح ومفهوم للتوقيف أو القبض.",
-"يجب توضيح سبب القبض للموقوف متى سمح السيناريو بذلك.",
-"يمنع توقيف المواطنين أو إساءة استخدام الصلاحيات دون مبرر."
-]],
-
-["التفتيش والإجراءات",[
-"يجب أن يستند التفتيش إلى سبب وإجراء نظامي داخل الرول بلاي.",
-"تراعى صلاحيات الشخصية والأنظمة المعتمدة عند التفتيش أو المصادرة.",
-"يجب توثيق الإجراءات المهمة وفق نظام السيرفر."
-]],
-
-["المطاردات والمركبات",[
-"تراعى سلامة اللاعبين وواقعية القيادة أثناء المطاردة.",
-"يمنع استخدام المركبة بطريقة عبثية أو غير واقعية لإيقاف الآخرين.",
-"يجب الالتزام بتعليمات القيادة والمواقف الميدانية."
-]],
-
-["الموقوفون والرهائن",[
-"يجب التعامل مع الموقوفين باحترام وعدم إهانتهم خارج إطار السيناريو.",
-"تراعى سلامة الرهائن وتكون المفاوضات ضمن سياق منطقي.",
-"يمنع استغلال الصلاحيات أو المعدات لتحقيق مكاسب شخصية."
-]]
-
-]
-},
-
-{
-id:"ems",
-icon:"🚑",
-name:"قوانين الإسعاف EMS",
-desc:"قواعد الحياد والاستجابة للحالات الطبية وتمثيل الإصابات.",
-rules:[
-
-["الحياد وأولوية الحالات",[
-"يلتزم المسعف بالحياد وتقديم الخدمة وفق خطورة الحالة وأولويتها.",
-"يمنع التمييز بين اللاعبين بسبب خلافات أو انتماءات داخل اللعبة.",
-"تنظم الاستجابة للحالات بحسب ظروف الموقع وإمكانية الوصول الآمن."
-]],
-
-["أمان موقع البلاغ",[
-"لا يدخل المسعف موقع اشتباك غير مؤمن قبل التأكد من سلامة الوصول وفق السيناريو.",
-"يحق للمسعف طلب تأمين الموقع قبل تقديم الخدمة.",
-"يجب عدم تعريض الطاقم أو المصابين لخطر إضافي دون مبرر."
-]],
-
-["التمثيل الطبي",[
-"يستخدم المسعف أوامر /me و /do لشرح الفحص والعلاج عند الحاجة.",
-"يجب تمثيل الإصابة والعلاج بصورة واقعية ومناسبة للحالة.",
-"يمنع تجاهل حالة المصاب أو إنهاء العلاج دون إكمال التمثيل المطلوب."
-]],
-
-["المركبات والأدوية",[
-"تستخدم مركبات الإسعاف والمعدات لأغراض العمل فقط.",
-"يمنع بيع الأدوية أو المعدات أو استخدامها لمصلحة شخصية.",
-"يجب المحافظة على مركبات وممتلكات القسم."
-]],
-
-["الوفاة والمستشفى",[
-"تُتبع آلية إعلان الوفاة والإجراءات الطبية المعتمدة داخل السيرفر عند الحالات القاتلة.",
-"يُحترم المستشفى باعتباره موقعاً مخصصاً للعلاج وتراعى سلامته.",
-"يمنع الاعتداء على المسعفين أثناء أداء مهامهم دون مبرر سيناريوي معتمد."
-]]
-
-]
-},
-
-{
-id:"justice",
-icon:"⚖️",
-name:"قوانين المحكمة والقضاء",
-desc:"استقلال القضاء وتنظيم الجلسات والأدلة والإجراءات.",
-rules:[
-
-["حرمة المحكمة",[
-"تعد المحكمة موقعاً مخصصاً للإجراءات القضائية ويجب احترام نظامها.",
-"يمنع التشويش على الجلسات أو تعطيلها عمداً.",
-"يلتزم الحاضرون بتوجيهات القاضي داخل الجلسة."
-]],
-
-["حياد القاضي",[
-"يلتزم القاضي بالحياد وعدم تفضيل طرف بسبب علاقة أو خلاف شخصي.",
-"يجب الاستماع إلى الأطراف ومنحهم فرصة عادلة لعرض أقوالهم.",
-"يجب أن تستند الأحكام إلى الوقائع والأدلة المقدمة."
-]],
-
-["المحامي والسرية",[
-"يحق للمتهم الاستعانة بمحامٍ وفق نظام المحكمة.",
-"تحترم سرية ما يقدمه الموكل لمحاميه ضمن حدود أنظمة السيرفر.",
-"يمنع التأثير غير المشروع على الشهود أو أطراف القضية."
-]],
-
-["الأدلة والمذكرات",[
-"تقبل الأدلة التي جُمعت وقدمت بطريقة نظامية داخل الرول بلاي.",
-"تراعى إجراءات مذكرات التفتيش والاعتقال المعتمدة.",
-"يمنع تزوير الأدلة أو إخفاؤها أو تقديم معلومات مضللة للمحكمة."
-]],
-
-["الجلسات والأحكام",[
-"تدار الجلسة وفق ترتيب يحدده القاضي.",
-"تعلن الأحكام وأسبابها ضمن سياق القضية.",
-"تطبق الأحكام القضائية وفق صلاحيات الجهات المختصة."
-]]
-
-]
-},
-
-{
-id:"crime",
-icon:"🔫",
-name:"قوانين الإجرام والعصابات",
-desc:"تنظيم الأنشطة الإجرامية والرهائن والتعامل مع الجهات الأمنية.",
-rules:[
-
-["السلوك الإجرامي",[
-"يجب أن يكون النشاط الإجرامي ضمن سيناريو واضح ومتوافق مع أنظمة السيرفر.",
-"يمنع مضايقة العسكريين أو استفزازهم بصورة متكررة دون سياق لعب.",
-"يمنع الخروج من اللعبة أو مغادرة السيناريو بقصد تجنب القبض أو نتائجه."
-]],
-
-["الاستسلام والتهديد",[
-"يجب التفاعل مع التهديد الجدي بالسلاح بصورة واقعية.",
-"عند تحقق شروط الاستسلام في السيناريو يجب عدم تجاهلها أو مواصلة التصعيد بلا مبرر.",
-"يمنع استغلال الثغرات أو الحركات غير الواقعية للهروب من موقف محسوم."
-]],
-
-["السطو والرهائن",[
-"يمنع بدء سرقة بنك دون استيفاء متطلبات السيناريو المعتمدة.",
-"يمنع اتخاذ الأصدقاء أو المعارف رهائن بصورة متفق عليها مسبقاً للحصول على أفضلية.",
-"يجب أن تكون مطالب الرهائن والتفاوض منطقية ضمن أحداث الموقف."
-]],
-
-["العصابات",[
-"يلتزم أفراد العصابة بأنظمة السيرفر والسيناريوهات المعتمدة.",
-"يمنع الاعتداء العشوائي على عصابة أخرى دون سبب أو تصعيد مناسب.",
-"يمنع استغلال العضوية أو ممتلكات العصابة لمخالفة القوانين العامة."
-]]
-
-]
-},
-
-{
-id:"vehicles",
-icon:"🚗",
-name:"قوانين المركبات والقيادة",
-desc:"تنظيم استخدام المركبات والقيادة ضمن بيئة لعب واقعية.",
-rules:[
-
-["القيادة الواقعية",[
-"يجب قيادة المركبات بما يتناسب مع نوعها والطريق والظروف المحيطة.",
-"يمنع القيادة العبثية أو القفزات غير المنطقية التي تفسد السيناريو.",
-"تراعى سلامة المشاة واللاعبين أثناء القيادة."
-]],
-
-["الصدم والحوادث",[
-"يمنع الصدم العشوائي أو المتعمد دون مبرر رول بلاي.",
-"يجب تمثيل الحوادث والإصابات الناتجة عنها وفق طبيعة الموقف.",
-"يمنع استخدام المركبة لإفساد مشهد أو تعطيل لاعب بصورة متعمدة."
-]],
-
-["مركبات الجهات الرسمية",[
-"تستخدم المركبات الرسمية من أصحاب الصلاحية ولأغراض العمل.",
-"يمنع الاستيلاء على مركبة رسمية أو استخدامها خارج سياق السيناريو المسموح.",
-"يجب المحافظة على المركبات وإعادتها وفق تعليمات القسم."
-]]
-
-]
+if(input.value === ADMIN_PASSWORD){
+sessionStorage.setItem("bt_admin_access","true");
+document.getElementById("loginScreen").style.display="none";
+error.textContent="";
+}else{
+error.textContent="كلمة المرور غير صحيحة";
+input.value="";
+}
 }
 
+document.getElementById("adminPassword").addEventListener("keydown",function(e){
+if(e.key==="Enter") enterAdmin();
+});
+
+if(sessionStorage.getItem("bt_admin_access")==="true"){
+document.getElementById("loginScreen").style.display="none";
+}
+
+/* RANK DATA */
+
+const ranks={
+small:[
+["BT | Helper",20],
+["BT | Mod",35],
+["BT | Super Mod",50],
+["BT | Staff",65],
+["BT | Support",80],
+["BT | Supervisor",95],
+["BT | Support Leader",110]
+],
+
+middle:[
+["BT | Coordinator",0],
+["BT | Head Staff",25],
+["BT | Admin",50],
+["BT | Head Admin",75],
+["Admin Manager",100],
+["BT | Supervisor",125],
+["BT | Support Leader",150]
+],
+
+senior:[
+["BT | MID MANAGEMENT",0],
+["BT | STAFF ASSISTANT",35],
+["BT | CO-STAFF MANAGER",70],
+["BT | STAFF MANAGER",105],
+["BT | CO-LEADER",140],
+["BT | LEADER",175],
+["BT | COMMANDER",210],
+["BT | DICTATOR",245],
+["EMPEROR",280]
+]
+};
+
+/* TIMEOUT DATA */
+
+const violations=[
+["سبام وتكرار الرسائل","10 دقائق"],
+["السب العام حسب نوع السب","5 ساعات"],
+["الاستهزاء بالأعضاء","15 دقيقة"],
+["منشن الرتب الإدارية دون سبب","10 دقائق"],
+["استخدام إيموجيات غير أخلاقية","3 ساعات"],
+["سب الأهل أو الأعراض","10 أيام"],
+["العنصرية","3 أيام"],
+["الاستهزاء بأي ديانة","يوم واحد"],
+["التحزبات أو العنصرية القبلية","يوم واحد"],
+["نشر صور شخص دون إذنه","يوم واحد"],
+["ذكر أسماء سيرفرات أخرى أو التلميح لها","30 دقيقة غير مفعل / ساعة ونصف مفعل"],
+["افتعال المشاكل","ساعة"],
+["تشفير سبات قوية","24 ساعة"],
+["الكلام في مكان غير مخصص","15 دقيقة"],
+["نشر صور مخلة بالآداب","5 ساعات وقد تصل للأيام"],
+["نشر إشاعات أو تشويه سمعة الأعضاء","3 ساعات"],
+["البيع والشراء داخل السيرفر","5 ساعات"],
+["عدم احترام الآخرين أو التحدث بأسلوب غير لائق","15 دقيقة وقد تزيد"],
+["سبام التكتات لنفس السبب أو للمزح","ساعة ونصف"],
+["استخدام صلاحيات الرول بشكل خاطئ","3 أيام + بلاك ليست الصلاحيات"],
+["كثرة المنشن في أخبار العصابات أو ما يخص الرول","3 ساعات"],
+["فتح شير لأشياء مخالفة للآداب","5 ساعات وقد تزيد"],
+["نشر محتوى إباحي أو مسيء للمجتمع","يومان إلى 5 أيام وقد يصل للباند"],
+["افتار مخالف للآداب أو العقيدة الإسلامية","5 أيام وقد يصل للباند عند التكرار"],
+["محاولة الكذب على الإدارة داخل التكت","ساعتان"],
+["الإساءة داخل التكت","تدبيل المدة الأساسية"],
+["الاستهزاء بالتكت أو فتح تكت للمزح","ساعة"],
+["استخدام أوامر البوت في الشات العام","15 دقيقة"],
+["نشر معلومات أي شخص أو انتهاك خصوصيته","يوم واحد"],
+["نشر روابط تهكير أو برامج اختراق","يوم واحد مع إبلاغ الإدارة الوسطى والعليا بالدليل"],
+["أسلوب التهديد","15 دقيقة"]
 ];
 
-let activeId = categories[0].id;
+/* NAVIGATION */
 
-const nav = document.getElementById('categoryNav');
-const list = document.getElementById('rulesList');
-const search = document.getElementById('searchBox');
+function go(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
 
-function renderNav(){
+const page=document.getElementById(id);
+if(page)page.classList.add("active");
 
- nav.innerHTML = categories.map(c=>`
-  <button class="cat-btn ${c.id===activeId?'active':''}"
-  data-id="${c.id}">
-   <span class="ico">${c.icon}</span>
-   ${c.name}
-  </button>
- `).join('');
+const button=document.querySelector('[data-page="'+id+'"]');
+if(button)button.classList.add("active");
 
- nav.querySelectorAll('button').forEach(b=>{
-  b.addEventListener('click',()=>{
-   activeId=b.dataset.id;
-   search.value='';
-   renderNav();
-   renderRules();
-  });
- });
+document.getElementById("nav").classList.remove("open");
 
+window.scrollTo({top:0,behavior:"smooth"});
 }
 
-function renderRules(){
+/* MOBILE MENU */
 
- const cat=categories.find(c=>c.id===activeId);
-
- document.getElementById('sectionTitle').textContent=cat.name;
- document.getElementById('sectionDesc').textContent=cat.desc;
-
- const q=search.value.trim().toLowerCase();
- let count=0;
-
- list.innerHTML=cat.rules.map((r,i)=>{
-
-  const hay=(r[0]+' '+r[1].join(' ')).toLowerCase();
-
-  if(q && !hay.includes(q)) return '';
-
-  count++;
-
-  return `
-   <details class="rule" ${q?'open':''}>
-    <summary>
-     <span class="rule-num">${String(i+1).padStart(2,'0')}</span>
-     <span class="rule-title">${r[0]}</span>
-     <span class="pill">${cat.name}</span>
-    </summary>
-
-    <div class="rule-body">
-     <ul>
-      ${r[1].map(x=>`<li>${x}</li>`).join('')}
-     </ul>
-    </div>
-   </details>
-  `;
-
- }).join('');
-
- document.getElementById('emptyState').style.display=count?'none':'block';
-
+function toggleMenu(){
+document.getElementById("nav").classList.toggle("open");
 }
 
-search.addEventListener('input',renderRules);
+/* RENDER RANKS */
 
-function countAll(){
+function renderRanks(id,data){
+const target=document.getElementById(id);
 
- document.getElementById('categoryCount').textContent=categories.length;
-
- document.getElementById('ruleCount').textContent=
- categories.reduce((n,c)=>
- n+c.rules.reduce((m,r)=>m+r[1].length+1,0),0);
-
+target.innerHTML=data.map((r,i)=>`
+<div class="rank-card">
+<div>
+<div class="rank-name">${r[0]}</div>
+<div class="rank-level">رتبة إدارية معتمدة</div>
+</div>
+<div class="points">${r[1]} نقطة</div>
+</div>
+`).join("");
 }
 
-renderNav();
-renderRules();
-countAll();
+renderRanks("smallRanks",ranks.small);
+renderRanks("middleRanks",ranks.middle);
+renderRanks("seniorRanks",ranks.senior);
+
+/* POINT CALCULATOR */
+
+function updateRanks(){
+const level=document.getElementById("level").value;
+const select=document.getElementById("target");
+
+select.innerHTML=ranks[level].map((r,i)=>
+`<option value="${r[1]}">${r[0]} — ${r[1]} نقطة</option>`
+).join("");
+}
+
+updateRanks();
+
+function calculate(){
+const currentInput=document.getElementById("currentPoints");
+const current=Number(currentInput.value);
+const target=Number(document.getElementById("target").value);
+const result=document.getElementById("calcResult");
+const text=document.getElementById("calcText");
+const bar=document.getElementById("progressBar");
+
+if(currentInput.value===""||!Number.isFinite(current)||current<0){
+alert("يرجى إدخال عدد نقاط صحيح");
+return;
+}
+
+const remaining=Math.max(0,target-current);
+const percentage=target===0?100:Math.min(100,(current/target)*100);
+
+result.style.display="block";
+bar.style.width=percentage+"%";
+
+if(remaining===0){
+text.innerHTML=
+"وصلت إلى الحد المطلوب من النقاط"+
+"<br>يتبقى اعتماد الترقية من المسؤول المختص";
+}else{
+text.innerHTML=
+"النقاط المطلوبة: "+target+
+"<br>نقاطك الحالية: "+current+
+"<br>النقاط المتبقية: "+remaining+
+"<br>نسبة الإنجاز: "+Math.round(percentage)+"%";
+}
+}
+
+/* TIMEOUT TABLE */
+
+function renderTimeout(){
+const rows=document.getElementById("timeoutRows");
+
+rows.innerHTML=violations.map(v=>`
+<tr>
+<td>${v[0]}</td>
+<td><span class="points">${v[1]}</span></td>
+</tr>
+`).join("");
+}
+
+renderTimeout();
+
+function filterTimeout(){
+const query=document.getElementById("timeoutSearch").value.trim().toLowerCase();
+let shown=0;
+
+document.querySelectorAll("#timeoutRows tr").forEach(row=>{
+const match=row.innerText.toLowerCase().includes(query);
+row.style.display=match?"":"none";
+if(match)shown++;
+});
+
+document.getElementById("emptySearch").style.display=shown?"none":"block";
+}
+
+/* FAQ */
+
+function faq(button){
+const parent=button.parentElement;
+parent.classList.toggle("open");
+
+button.querySelector("span").textContent=
+parent.classList.contains("open")?"−":"＋";
+}
+
+/* PARTICLES */
+
+const particleContainer=document.getElementById("particles");
+
+for(let i=0;i<45;i++){
+const p=document.createElement("span");
+
+p.className="particle";
+p.style.top=Math.random()*100+"%";
+p.style.left=Math.random()*100+"%";
+p.style.animationDelay=Math.random()*8+"s";
+p.style.animationDuration=(6+Math.random()*8)+"s";
+
+particleContainer.appendChild(p);
+}
+
+/* SCROLL BUTTON */
+
+window.addEventListener("scroll",()=>{
+document.getElementById("topBtn").classList.toggle("show",window.scrollY>350);
+});
 
 </script>
-
 </body>
 </html>
