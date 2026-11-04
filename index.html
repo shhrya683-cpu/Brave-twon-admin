@@ -28,7 +28,6 @@
 }
 
 *{box-sizing:border-box}
-
 html{scroll-behavior:smooth}
 
 body{
@@ -44,8 +43,6 @@ button{cursor:pointer}
 a{color:inherit;text-decoration:none}
 ::selection{background:#2865b5;color:white}
 
-/* SPACE BACKGROUND */
-
 #spaceVideo{
 position:fixed;
 inset:0;
@@ -60,9 +57,7 @@ background:#030713;
 #spaceOverlay{
 position:fixed;
 inset:0;
-background:
-linear-gradient(rgba(3,8,19,.80),rgba(3,8,19,.89)),
-radial-gradient(ellipse at center,transparent,#020611);
+background:linear-gradient(rgba(3,8,19,.80),rgba(3,8,19,.89)),radial-gradient(ellipse at center,transparent,#020611);
 z-index:-2;
 pointer-events:none;
 }
@@ -118,7 +113,7 @@ animation:float 9s infinite ease-in-out;
 50%{transform:translateY(-35px);opacity:.9}
 }
 
-/* LOGIN SCREEN */
+/* LOGIN */
 
 #loginScreen{
 position:fixed;
@@ -128,9 +123,7 @@ display:flex;
 justify-content:center;
 align-items:center;
 padding:20px;
-background:
-radial-gradient(ellipse at top,#153d6b 0%,transparent 55%),
-linear-gradient(135deg,#02050d,#08152b,#02050d);
+background:radial-gradient(ellipse at top,#153d6b 0%,transparent 55%),linear-gradient(135deg,#02050d,#08152b,#02050d);
 }
 
 .login-card{
@@ -141,9 +134,7 @@ text-align:center;
 background:rgba(9,20,39,.95);
 border:1px solid rgba(116,177,255,.4);
 border-radius:25px;
-box-shadow:
-0 0 80px rgba(25,104,190,.25),
-inset 0 0 30px rgba(45,105,180,.06);
+box-shadow:0 0 80px rgba(25,104,190,.25),inset 0 0 30px rgba(45,105,180,.06);
 backdrop-filter:blur(20px);
 animation:loginAppear .7s ease;
 }
@@ -321,15 +312,10 @@ width:500px;
 height:500px;
 border:1px solid rgba(106,169,255,.12);
 border-radius:50%;
-box-shadow:
-0 0 0 55px rgba(106,169,255,.025),
-0 0 0 110px rgba(106,169,255,.02);
+box-shadow:0 0 0 55px rgba(106,169,255,.025),0 0 0 110px rgba(106,169,255,.02);
 }
 
-.hero-content{
-position:relative;
-z-index:2;
-}
+.hero-content{position:relative;z-index:2}
 
 .hero-label{
 display:inline-flex;
@@ -471,8 +457,7 @@ font-weight:700;
 transition:.25s;
 }
 
-.nav button:hover,
-.nav button.active{
+.nav button:hover,.nav button.active{
 background:linear-gradient(120deg,#1c4d88,#173967);
 color:white;
 border-color:#3979c4;
@@ -529,9 +514,7 @@ box-shadow:0 15px 45px rgba(0,0,0,.25);
 transition:.25s;
 }
 
-.card:hover{
-border-color:rgba(117,173,255,.32);
-}
+.card:hover{border-color:rgba(117,173,255,.32)}
 
 .card h3{
 font-size:16px;
@@ -539,8 +522,7 @@ color:var(--light);
 margin:0 0 12px;
 }
 
-.card p,
-.card li{
+.card p,.card li{
 color:#c2cfe0;
 font-size:13px;
 line-height:2.1;
@@ -697,9 +679,7 @@ font-size:12px;
 color:#d1dced;
 }
 
-tr:hover td{
-background:rgba(54,115,185,.08);
-}
+tr:hover td{background:rgba(54,115,185,.08)}
 
 /* SEARCH */
 
@@ -899,15 +879,9 @@ z-index:50;
 .status{font-size:10px}
 .hero{min-height:510px;padding:70px 15px}
 .hero h2{font-size:13px;letter-spacing:3px}
-.stats{
-grid-template-columns:repeat(2,1fr);
-margin-top:-20px;
-}
+.stats{grid-template-columns:repeat(2,1fr);margin-top:-20px}
 .nav-wrap{padding:0 10px}
-.nav{
-display:none;
-flex-direction:column;
-}
+.nav{display:none;flex-direction:column}
 .nav.open{display:flex}
 .nav button{text-align:right}
 .card{padding:17px}
@@ -938,12 +912,7 @@ flex-direction:column;
 <h1>ADMIN ACCESS</h1>
 <p>يرجى إدخال كلمة المرور الإدارية للدخول إلى النظام</p>
 
-<input
-id="adminPassword"
-type="password"
-placeholder="كلمة المرور الإدارية"
-autocomplete="current-password"
->
+<input id="adminPassword" type="password" placeholder="كلمة المرور الإدارية" autocomplete="current-password">
 
 <button onclick="enterAdmin()">دخول النظام</button>
 <div id="loginError"></div>
@@ -984,7 +953,7 @@ autocomplete="current-password"
 <!-- STATISTICS -->
 <div class="stats">
 <div class="stat"><strong>14</strong><span>قوانين الإدارة</span></div>
-<div class="stat"><strong>3</strong><span>مستويات إدارية</span></div>
+<div class="stat"><strong>2</strong><span>مستويات إدارية</span></div>
 <div class="stat"><strong>31</strong><span>مخالفة</span></div>
 <div class="stat"><strong>05</strong><span>طرق اكتساب نقاط</span></div>
 </div>
@@ -1133,7 +1102,7 @@ autocomplete="current-password"
 <div class="card">
 <span class="label">LEVEL 01</span>
 <div class="level-title">الإدارة الصغرى</div>
-<p>تبدأ أول رتبة من 20 نقطة، وتزيد 15 نقطة بين كل رتبة.</p>
+<p>تبدأ أول رتبة من 20 نقطة وتزيد 15 نقطة بين كل رتبة</p>
 <div id="smallRanks"></div>
 
 <h3>المهام الأساسية</h3>
@@ -1149,7 +1118,7 @@ autocomplete="current-password"
 <div class="card">
 <span class="label">LEVEL 02</span>
 <div class="level-title">الإدارة الوسطى</div>
-<p>تبدأ أول رتبة من صفر نقطة، وتزيد 25 نقطة بين كل رتبة.</p>
+<p>تبدأ أول رتبة من صفر نقطة وتزيد 25 نقطة بين كل رتبة</p>
 <div id="middleRanks"></div>
 
 <h3>المهام الأساسية</h3>
@@ -1158,24 +1127,7 @@ autocomplete="current-password"
 <li>مراجعة الشكاوى والمشاكل الإدارية</li>
 <li>متابعة المخالفات والتأكد من الأدلة</li>
 <li>مراجعة أداء الإداريين وتقديم التقييمات</li>
-<li>رفع التقارير والاقتراحات للإدارة العليا</li>
-</ul>
-</div>
-
-<div class="card">
-<span class="label">LEVEL 03</span>
-<div class="level-title">الإدارة العليا</div>
-<p>تبدأ أول رتبة من صفر نقطة، وتزيد 35 نقطة بين كل رتبة.</p>
-<div id="seniorRanks"></div>
-
-<h3>المهام الأساسية</h3>
-<ul>
-<li>الإشراف العام على المستويات الإدارية</li>
-<li>اتخاذ القرارات الإدارية الكبرى</li>
-<li>اعتماد الترقيات والقرارات المهمة</li>
-<li>مراجعة أداء الإدارة الوسطى والصغرى</li>
-<li>المحافظة على سرية المعلومات الإدارية</li>
-<li>حل النزاعات الإدارية واتخاذ القرارات المناسبة</li>
+<li>رفع التقارير والاقتراحات الإدارية</li>
 </ul>
 </div>
 
@@ -1231,7 +1183,6 @@ autocomplete="current-password"
 <select class="field" id="level" onchange="updateRanks()">
 <option value="small">الإدارة الصغرى</option>
 <option value="middle">الإدارة الوسطى</option>
-<option value="senior">الإدارة العليا</option>
 </select>
 
 <label class="form-label">الرتبة المستهدفة</label>
@@ -1302,7 +1253,7 @@ autocomplete="current-password"
 <li>يمنع إعطاء العقوبات بسبب الخلافات الشخصية</li>
 <li>يمنع زيادة أو تخفيض العقوبة دون سبب واضح</li>
 <li>يجوز تصعيد العقوبة عند تكرار المخالفة</li>
-<li>رفع المخالفات الخطيرة للإدارة الوسطى والعليا</li>
+<li>رفع المخالفات الخطيرة للإدارة الوسطى</li>
 <li>توثيق العقوبات الإدارية عند الحاجة</li>
 </ul>
 </div>
@@ -1357,7 +1308,7 @@ autocomplete="current-password"
 <li>يمنع إعطاء صلاحيات إدارية دون موافقة</li>
 <li>يجب التأكد من استحقاق العضو للرتبة قبل إعطائها</li>
 <li>يمنع استغلال الأوامر والصلاحيات</li>
-<li>تتم مراجعة إساءة استخدام الأوامر من الإدارة الأعلى</li>
+<li>تتم مراجعة إساءة استخدام الأوامر من المسؤول المختص</li>
 </ul>
 </div>
 
@@ -1467,13 +1418,13 @@ autocomplete="current-password"
 
 /* PASSWORD */
 
-const ADMIN_PASSWORD = "1234567890";
+const ADMIN_PASSWORD = "7788662";
 
 function enterAdmin(){
-const input = document.getElementById("adminPassword");
-const error = document.getElementById("loginError");
+const input=document.getElementById("adminPassword");
+const error=document.getElementById("loginError");
 
-if(input.value === ADMIN_PASSWORD){
+if(input.value===ADMIN_PASSWORD){
 sessionStorage.setItem("bt_admin_access","true");
 document.getElementById("loginScreen").style.display="none";
 error.textContent="";
@@ -1484,7 +1435,7 @@ input.value="";
 }
 
 document.getElementById("adminPassword").addEventListener("keydown",function(e){
-if(e.key==="Enter") enterAdmin();
+if(e.key==="Enter")enterAdmin();
 });
 
 if(sessionStorage.getItem("bt_admin_access")==="true"){
@@ -1494,37 +1445,35 @@ document.getElementById("loginScreen").style.display="none";
 /* RANK DATA */
 
 const ranks={
+
 small:[
-["BT | Helper",20],
-["BT | Mod",35],
-["BT | Super Mod",50],
-["BT | Staff",65],
-["BT | Support",80],
-["BT | Supervisor",95],
-["BT | Support Leader",110]
+["Active",20],
+["Helper",35],
+["Moderator",50],
+["Super Moderator",65],
+["Staff",80],
+["Support",95],
+["Supervisor",110],
+["Support Lead",125],
+["Coordinator",140],
+["Head Staff",155],
+["Admin",170],
+["Admin Supervisor",185],
+["Head Admin",200],
+["Admin Manager",215]
 ],
 
 middle:[
-["BT | Coordinator",0],
-["BT | Head Staff",25],
-["BT | Admin",50],
-["BT | Head Admin",75],
-["Admin Manager",100],
-["BT | Supervisor",125],
-["BT | Support Leader",150]
-],
-
-senior:[
-["BT | MID MANAGEMENT",0],
-["BT | STAFF ASSISTANT",35],
-["BT | CO-STAFF MANAGER",70],
-["BT | STAFF MANAGER",105],
-["BT | CO-LEADER",140],
-["BT | LEADER",175],
-["BT | COMMANDER",210],
-["BT | DICTATOR",245],
-["EMPEROR",280]
+["BT | CO-STAFF MANAGER",0],
+["BT | STAFF MANAGER",25],
+["BT | CO-LEADER",50],
+["BT | LEADER",75],
+["BT | COMMANDER",100],
+["BT | DICTATOR",125],
+["BT | EMPEROR",150],
+["𝐁𝐓 ┃ 𝗦𝗧𝗔𝗙𝗙 𝗔𝗦𝗦𝗜𝗦𝗧𝗔𝗡𝗧",175]
 ]
+
 };
 
 /* TIMEOUT DATA */
@@ -1559,7 +1508,7 @@ const violations=[
 ["الاستهزاء بالتكت أو فتح تكت للمزح","ساعة"],
 ["استخدام أوامر البوت في الشات العام","15 دقيقة"],
 ["نشر معلومات أي شخص أو انتهاك خصوصيته","يوم واحد"],
-["نشر روابط تهكير أو برامج اختراق","يوم واحد مع إبلاغ الإدارة الوسطى والعليا بالدليل"],
+["نشر روابط تهكير أو برامج اختراق","يوم واحد مع إبلاغ الإدارة الوسطى بالدليل"],
 ["أسلوب التهديد","15 دقيقة"]
 ];
 
@@ -1576,7 +1525,6 @@ const button=document.querySelector('[data-page="'+id+'"]');
 if(button)button.classList.add("active");
 
 document.getElementById("nav").classList.remove("open");
-
 window.scrollTo({top:0,behavior:"smooth"});
 }
 
@@ -1591,7 +1539,7 @@ document.getElementById("nav").classList.toggle("open");
 function renderRanks(id,data){
 const target=document.getElementById(id);
 
-target.innerHTML=data.map((r,i)=>`
+target.innerHTML=data.map(r=>`
 <div class="rank-card">
 <div>
 <div class="rank-name">${r[0]}</div>
@@ -1604,7 +1552,6 @@ target.innerHTML=data.map((r,i)=>`
 
 renderRanks("smallRanks",ranks.small);
 renderRanks("middleRanks",ranks.middle);
-renderRanks("seniorRanks",ranks.senior);
 
 /* POINT CALCULATOR */
 
@@ -1612,7 +1559,7 @@ function updateRanks(){
 const level=document.getElementById("level").value;
 const select=document.getElementById("target");
 
-select.innerHTML=ranks[level].map((r,i)=>
+select.innerHTML=ranks[level].map(r=>
 `<option value="${r[1]}">${r[0]} — ${r[1]} نقطة</option>`
 ).join("");
 }
